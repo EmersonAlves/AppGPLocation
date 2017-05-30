@@ -22,6 +22,13 @@ public class DBHelper extends SQLiteOpenHelper {
                     "idconfig INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "intervalo INTEGER)";
 
+    private static String TABLE_MSG =
+            "CREATE TABLE mensagens(" +
+                    "idmsg INTEGER PRIMARY KEY," +
+                    "idenviou INTEGER," +
+                    "idrecebeu INTEGER," +
+                    "msg TEXT)";
+
     public DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
 
@@ -31,6 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_USUARIO);
         db.execSQL(TABLE_CONFIG);
+        db.execSQL(TABLE_MSG);
     }
 
     @Override

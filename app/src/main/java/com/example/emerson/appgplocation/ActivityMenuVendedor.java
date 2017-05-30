@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.emerson.appgplocation.db.DBManager;
 import com.example.emerson.appgplocation.model.Usuario;
+import com.example.emerson.appgplocation.util.ServicoNotificacaoWebApi;
 import com.example.emerson.appgplocation.util.Url;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -19,6 +20,7 @@ public class ActivityMenuVendedor extends AppCompatActivity {
     private DBManager dbManager;
     private Button btnCliente;
     private Button btnMapaCliente;
+    private Button btnEnviarMensagem;
     private Button btnSair;
 
     @Override
@@ -30,6 +32,7 @@ public class ActivityMenuVendedor extends AppCompatActivity {
 
         btnCliente = (Button)findViewById(R.id.btnCliente);
         btnMapaCliente = (Button)findViewById(R.id.btnMapaCliente);
+        btnEnviarMensagem = (Button)findViewById(R.id.btnMensagem);
         btnSair = (Button)findViewById(R.id.btnSair);
         Activity activity = this;
         eventAction(activity);
@@ -57,13 +60,23 @@ public class ActivityMenuVendedor extends AppCompatActivity {
             }
         });
 
+        btnEnviarMensagem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityMenuVendedor.this,ActivityMensagem.class);
+                startActivity(intent);
+            }
+        });
+
         btnSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent("SERVICO_TEST");
                 stopService(it);
+                stopService(new Intent(ActivityMenuVendedor.this, ServicoNotificacaoWebApi.class));
                 Usuario usuario = dbManager.getListaUsuarios().get(0);
                 dbManager.deleteUsuario(usuario);
+                dbManager.deleteMessege();
                 Intent intent = new Intent(ActivityMenuVendedor.this,MainActivity.class);
                 startActivity(intent);
                 finish();

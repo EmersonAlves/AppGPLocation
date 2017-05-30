@@ -20,6 +20,7 @@ import com.example.emerson.appgplocation.model.Configuracao;
 import com.example.emerson.appgplocation.model.EnviarUsuario;
 import com.example.emerson.appgplocation.model.Usuario;
 import com.example.emerson.appgplocation.util.Service;
+import com.example.emerson.appgplocation.util.ServicoNotificacaoWebApi;
 import com.example.emerson.appgplocation.util.Url;
 
 import org.apache.http.HttpEntity;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             startService();
             Intent intent = new Intent(MainActivity.this,ActivityMenuVendedor.class);
             startActivity(intent);
+            startService(new Intent(MainActivity.this, ServicoNotificacaoWebApi.class));
             finish();
         }
         //startService();

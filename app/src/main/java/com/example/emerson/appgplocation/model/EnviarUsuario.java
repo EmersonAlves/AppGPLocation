@@ -12,6 +12,7 @@ public class EnviarUsuario {
     private String url;
     private Usuario usuario;
     private Posicao posicao;
+    private Mensagem mensagem;
 
     public Posicao getPosicao() {
         return posicao;
@@ -43,5 +44,13 @@ public class EnviarUsuario {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Mensagem getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(Mensagem mensagem) {
+        this.mensagem = mensagem;
     }
 }

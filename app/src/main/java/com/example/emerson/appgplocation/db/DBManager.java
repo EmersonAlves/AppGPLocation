@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 
 import com.example.emerson.appgplocation.model.Configuracao;
+import com.example.emerson.appgplocation.model.Mensagem;
 import com.example.emerson.appgplocation.model.Usuario;
 
 import java.util.ArrayList;
@@ -32,6 +33,16 @@ public class DBManager {
         db.insert("usuario",null,values);
 
     }
+    public void inserirMSG(Mensagem mensagem){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("idmsg",mensagem.getIdMsg());
+        values.put("idenviou",mensagem.getIdenviado());
+        values.put("idrecebeu",mensagem.getIdrecebido());
+        values.put("msg",mensagem.getMsg());
+        db.insert("mensagens",null,values);
+    }
+
 
     public void inserirConfig(Configuracao configuracao){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -53,8 +64,13 @@ public class DBManager {
         values.put("idusuario",usuario.getIdUsuario());
         values.put("nome",usuario.getNome());
         db.delete("usuario",null,null);
+    }
+    public void deleteMessege(){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete("mensagens",null,null);
 
     }
+
     public List<Usuario> getListaUsuarios(){
         String sql = "SELECT * FROM usuario";
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -72,6 +88,24 @@ public class DBManager {
         }
         return usuarios;
     }
+    public List<Mensagem> getListaMensagens(){
+        String sql = "SELECT * FROM mensagens";
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql,null);
+        List<Mensagem> mensagens = new ArrayList<>();
+        if(cursor != null){
+            while (cursor.moveToNext()){
+                Mensagem mensagem = new Mensagem();
+                mensagem.setIdMsg(cursor.getLong(0));
+                mensagem.setIdenviado(cursor.getLong(1));
+                mensagem.setIdrecebido(cursor.getLong(2));
+                mensagem.setMsg(cursor.getString(3));
+                mensagens.add(mensagem);
+            }
+        }
+        return mensagens;
+    }
+
     public Configuracao getConfig(Long id){
         String sql = "SELECT * FROM config WHERE idconfig = '"+id+"'";
         SQLiteDatabase db = dbHelper.getReadableDatabase();
